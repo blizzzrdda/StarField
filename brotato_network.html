@@ -16,30 +16,54 @@
 
         <div id="controls">
             <div class="control-group">
-                <label for="node-filter">Filter by type:</label>
-                <select id="node-filter">
-                    <option value="all">All</option>
-                    <option value="character">Characters only</option>
-                    <option value="item">Items only</option>
-                    <option value="tag">Tags only</option>
-                    <option value="content">Characters & Items</option>
-                </select>
+                <label>Filter by type:</label>
+                <div class="checkbox-group">
+                    <div class="checkbox-header">
+                        <button class="select-all-btn" data-group="node-type">All</button>
+                        <button class="select-none-btn" data-group="node-type">None</button>
+                    </div>
+                    <label class="checkbox-item">
+                        <input type="checkbox" name="node-filter" value="character" checked>
+                        <span>Characters</span>
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="checkbox" name="node-filter" value="item" checked>
+                        <span>Items</span>
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="checkbox" name="node-filter" value="tag" checked>
+                        <span>Tags</span>
+                    </label>
+                </div>
             </div>
 
             <div class="control-group">
-                <label for="dlc-filter">DLC Content:</label>
-                <select id="dlc-filter">
-                    <option value="all">All</option>
-                    <option value="base">Base game only</option>
-                    <option value="dlc">DLC only</option>
-                </select>
+                <label>DLC Content:</label>
+                <div class="checkbox-group">
+                    <div class="checkbox-header">
+                        <button class="select-all-btn" data-group="dlc">All</button>
+                        <button class="select-none-btn" data-group="dlc">None</button>
+                    </div>
+                    <label class="checkbox-item">
+                        <input type="checkbox" name="dlc-filter" value="base" checked>
+                        <span>Base Game</span>
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="checkbox" name="dlc-filter" value="dlc" checked>
+                        <span>DLC Content</span>
+                    </label>
+                </div>
             </div>
 
             <div class="control-group">
-                <label for="tag-filter">Filter by tag:</label>
-                <select id="tag-filter">
-                    <option value="all">All tags</option>
-                </select>
+                <label>Filter by tag:</label>
+                <div class="checkbox-group" id="tag-filter-group">
+                    <div class="checkbox-header">
+                        <button class="select-all-btn" data-group="tag">All</button>
+                        <button class="select-none-btn" data-group="tag">None</button>
+                    </div>
+                    <!-- Tag checkboxes will be populated by JavaScript -->
+                </div>
             </div>
 
             <div class="control-group">
@@ -193,24 +217,85 @@
             });
         }
 
-        // Populate control dropdowns
+        // Populate control checkboxes
         function populateControls() {
-            const tagFilter = document.getElementById('tag-filter');
+            const tagFilterGroup = document.getElementById('tag-filter-group');
 
-            // Add tag options
+            // Add tag checkboxes
             networkData.tags.forEach(tag => {
-                const option = document.createElement('option');
-                option.value = tag;
-                option.textContent = tag;
-                tagFilter.appendChild(option);
+                const label = document.createElement('label');
+                label.className = 'checkbox-item';
+
+                const checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.name = 'tag-filter';
+                checkbox.value = tag;
+                checkbox.checked = true;
+
+                const span = document.createElement('span');
+                span.textContent = tag;
+
+                label.appendChild(checkbox);
+                label.appendChild(span);
+                tagFilterGroup.appendChild(label);
             });
 
-            // Add event listeners
-            document.getElementById('node-filter').addEventListener('change', filterNetwork);
-            document.getElementById('dlc-filter').addEventListener('change', filterNetwork);
-            document.getElementById('tag-filter').addEventListener('change', filterNetwork);
+            // Add event listeners for checkboxes
+            document.querySelectorAll('input[name="node-filter"]').forEach(cb => {
+                cb.addEventListener('change', filterNetwork);
+            });
+            document.querySelectorAll('input[name="dlc-filter"]').forEach(cb => {
+                cb.addEventListener('change', filterNetwork);
+            });
+            document.querySelectorAll('input[name="tag-filter"]').forEach(cb => {
+                cb.addEventListener('change', filterNetwork);
+            });
+
+            // Add event listeners for select all/none buttons
+            document.querySelectorAll('.select-all-btn').forEach(btn => {
+                btn.addEventListener('click', handleSelectAll);
+            });
+            document.querySelectorAll('.select-none-btn').forEach(btn => {
+                btn.addEventListener('click', handleSelectNone);
+            });
+
+            // Add event listeners for other controls
             document.getElementById('reset-zoom').addEventListener('click', resetZoom);
             document.getElementById('toggle-labels').addEventListener('click', toggleLabels);
+        }
+
+        // Handle select all button
+        function handleSelectAll(event) {
+            const group = event.target.dataset.group;
+            let checkboxes;
+
+            if (group === 'node-type') {
+                checkboxes = document.querySelectorAll('input[name="node-filter"]');
+            } else if (group === 'dlc') {
+                checkboxes = document.querySelectorAll('input[name="dlc-filter"]');
+            } else if (group === 'tag') {
+                checkboxes = document.querySelectorAll('input[name="tag-filter"]');
+            }
+
+            checkboxes.forEach(cb => cb.checked = true);
+            filterNetwork();
+        }
+
+        // Handle select none button
+        function handleSelectNone(event) {
+            const group = event.target.dataset.group;
+            let checkboxes;
+
+            if (group === 'node-type') {
+                checkboxes = document.querySelectorAll('input[name="node-filter"]');
+            } else if (group === 'dlc') {
+                checkboxes = document.querySelectorAll('input[name="dlc-filter"]');
+            } else if (group === 'tag') {
+                checkboxes = document.querySelectorAll('input[name="tag-filter"]');
+            }
+
+            checkboxes.forEach(cb => cb.checked = false);
+            filterNetwork();
         }
 
         // Update statistics display
@@ -381,26 +466,47 @@
 
         // Filter network based on controls
         function filterNetwork() {
-            const nodeFilter = document.getElementById('node-filter').value;
-            const dlcFilter = document.getElementById('dlc-filter').value;
-            const tagFilter = document.getElementById('tag-filter').value;
+            // Get selected node types
+            const selectedNodeTypes = Array.from(document.querySelectorAll('input[name="node-filter"]:checked'))
+                .map(cb => cb.value);
+
+            // Get selected DLC options
+            const selectedDlcOptions = Array.from(document.querySelectorAll('input[name="dlc-filter"]:checked'))
+                .map(cb => cb.value);
+
+            // Get selected tags
+            const selectedTags = Array.from(document.querySelectorAll('input[name="tag-filter"]:checked'))
+                .map(cb => cb.value);
 
             // Filter nodes
             nodeElements.style('display', d => {
                 let show = true;
 
                 // Handle node type filtering
-                if (nodeFilter === 'content' && d.type === 'tag') show = false;
-                else if (nodeFilter !== 'all' && nodeFilter !== 'content' && d.type !== nodeFilter) show = false;
-
-                // DLC filtering (only applies to characters and items, not tags)
-                if (d.type !== 'tag') {
-                    if (dlcFilter === 'base' && d.is_dlc) show = false;
-                    if (dlcFilter === 'dlc' && !d.is_dlc) show = false;
+                if (selectedNodeTypes.length > 0 && !selectedNodeTypes.includes(d.type)) {
+                    show = false;
                 }
 
-                // Tag filtering
-                if (tagFilter !== 'all' && !d.tags.includes(tagFilter)) show = false;
+                // DLC filtering (only applies to characters and items, not tags)
+                if (d.type !== 'tag' && selectedDlcOptions.length > 0) {
+                    const isDlcContent = d.is_dlc;
+                    const showBase = selectedDlcOptions.includes('base');
+                    const showDlc = selectedDlcOptions.includes('dlc');
+
+                    if (isDlcContent && !showDlc) show = false;
+                    if (!isDlcContent && !showBase) show = false;
+                }
+
+                // Tag filtering - show if node has any of the selected tags
+                if (selectedTags.length > 0 && d.type !== 'tag') {
+                    const hasSelectedTag = d.tags.some(tag => selectedTags.includes(tag));
+                    if (!hasSelectedTag) show = false;
+                }
+
+                // For tag nodes, show if the tag itself is selected
+                if (d.type === 'tag' && selectedTags.length > 0) {
+                    if (!selectedTags.includes(d.name)) show = false;
+                }
 
                 return show ? 'block' : 'none';
             });
@@ -410,17 +516,30 @@
                 let show = true;
 
                 // Handle node type filtering
-                if (nodeFilter === 'content' && d.type === 'tag') show = false;
-                else if (nodeFilter !== 'all' && nodeFilter !== 'content' && d.type !== nodeFilter) show = false;
-
-                // DLC filtering (only applies to characters and items, not tags)
-                if (d.type !== 'tag') {
-                    if (dlcFilter === 'base' && d.is_dlc) show = false;
-                    if (dlcFilter === 'dlc' && !d.is_dlc) show = false;
+                if (selectedNodeTypes.length > 0 && !selectedNodeTypes.includes(d.type)) {
+                    show = false;
                 }
 
-                // Tag filtering
-                if (tagFilter !== 'all' && !d.tags.includes(tagFilter)) show = false;
+                // DLC filtering (only applies to characters and items, not tags)
+                if (d.type !== 'tag' && selectedDlcOptions.length > 0) {
+                    const isDlcContent = d.is_dlc;
+                    const showBase = selectedDlcOptions.includes('base');
+                    const showDlc = selectedDlcOptions.includes('dlc');
+
+                    if (isDlcContent && !showDlc) show = false;
+                    if (!isDlcContent && !showBase) show = false;
+                }
+
+                // Tag filtering - show if node has any of the selected tags
+                if (selectedTags.length > 0 && d.type !== 'tag') {
+                    const hasSelectedTag = d.tags.some(tag => selectedTags.includes(tag));
+                    if (!hasSelectedTag) show = false;
+                }
+
+                // For tag nodes, show if the tag itself is selected
+                if (d.type === 'tag' && selectedTags.length > 0) {
+                    if (!selectedTags.includes(d.name)) show = false;
+                }
 
                 return show && showLabels ? 'block' : 'none';
             });

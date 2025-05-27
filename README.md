@@ -43,25 +43,14 @@ An interactive network visualization showing relationships between Brotato chara
    node process_data.js
    ```
 
-2. **Choose your viewing method**:
+2. **Start the server**:
 
-   **🎯 Easiest Option - Embedded Version:**
-   ```bash
-   # Open directly in browser (no server needed)
-   open brotato_network_embedded.html
-   ```
-
-   **🚀 Server Options (for full features):**
    ```bash
    # Option A: Use the helper scripts
    ./start_server.sh        # Linux/Mac
    start_server.bat         # Windows
 
-   # Option B: Manual server start
-   python -m http.server 8000
-   # Then open: http://localhost:8000/brotato_network.html
-
-   # Option C: Node.js server
+   # Option B: Manual Node.js server start
    npx http-server -p 8000
    # Then open: http://localhost:8000/brotato_network.html
    ```
@@ -88,10 +77,8 @@ An interactive network visualization showing relationships between Brotato chara
 ├── brotato_characters.json         # Character data (62 characters)
 ├── brotato_items.json              # Item data (224 items)
 ├── process_data.js                 # Data processing script
-├── create_embedded_version.js      # Creates standalone HTML file
 ├── brotato_network_data.json       # Generated network data
 ├── brotato_network.html            # Main visualization (needs server)
-├── brotato_network_embedded.html   # Standalone version (no server needed)
 ├── styles.css                      # Styling and responsive design
 ├── start_server.sh                 # Helper script for Unix systems
 ├── start_server.bat                # Helper script for Windows
@@ -101,10 +88,8 @@ An interactive network visualization showing relationships between Brotato chara
 
 ### File Descriptions
 
-- **`brotato_network.html`**: Full-featured version that loads data via HTTP
-- **`brotato_network_embedded.html`**: Standalone version with embedded data (616KB)
+- **`brotato_network.html`**: Interactive visualization that loads data via HTTP
 - **`process_data.js`**: Processes raw JSON data into network format
-- **`create_embedded_version.js`**: Generates the embedded HTML version
 - **Helper scripts**: Easy server startup for different platforms
 
 ## 🔧 Technical Details

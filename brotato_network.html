@@ -482,30 +482,46 @@
             nodeElements.style('display', d => {
                 let show = true;
 
-                // Handle node type filtering
-                if (selectedNodeTypes.length > 0 && !selectedNodeTypes.includes(d.type)) {
+                // Handle node type filtering - if no types selected, hide all
+                if (selectedNodeTypes.length === 0) {
+                    show = false;
+                } else if (!selectedNodeTypes.includes(d.type)) {
                     show = false;
                 }
 
                 // DLC filtering (only applies to characters and items, not tags)
-                if (d.type !== 'tag' && selectedDlcOptions.length > 0) {
-                    const isDlcContent = d.is_dlc;
-                    const showBase = selectedDlcOptions.includes('base');
-                    const showDlc = selectedDlcOptions.includes('dlc');
+                if (show && d.type !== 'tag') {
+                    if (selectedDlcOptions.length === 0) {
+                        show = false;
+                    } else {
+                        const isDlcContent = d.is_dlc;
+                        const showBase = selectedDlcOptions.includes('base');
+                        const showDlc = selectedDlcOptions.includes('dlc');
 
-                    if (isDlcContent && !showDlc) show = false;
-                    if (!isDlcContent && !showBase) show = false;
+                        if (isDlcContent && !showDlc) show = false;
+                        if (!isDlcContent && !showBase) show = false;
+                    }
                 }
 
-                // Tag filtering - show if node has any of the selected tags
-                if (selectedTags.length > 0 && d.type !== 'tag') {
-                    const hasSelectedTag = d.tags.some(tag => selectedTags.includes(tag));
-                    if (!hasSelectedTag) show = false;
+                // Tag filtering - show if node has any of the selected tags OR has no tags
+                if (show && d.type !== 'tag') {
+                    if (selectedTags.length === 0) {
+                        show = false;
+                    } else {
+                        // Show if node has no tags OR has any of the selected tags
+                        const hasNoTags = !d.tags || d.tags.length === 0;
+                        const hasSelectedTag = d.tags && d.tags.some(tag => selectedTags.includes(tag));
+                        if (!hasNoTags && !hasSelectedTag) show = false;
+                    }
                 }
 
                 // For tag nodes, show if the tag itself is selected
-                if (d.type === 'tag' && selectedTags.length > 0) {
-                    if (!selectedTags.includes(d.name)) show = false;
+                if (show && d.type === 'tag') {
+                    if (selectedTags.length === 0) {
+                        show = false;
+                    } else if (!selectedTags.includes(d.name)) {
+                        show = false;
+                    }
                 }
 
                 return show ? 'block' : 'none';
@@ -515,30 +531,46 @@
             labelElements.style('display', d => {
                 let show = true;
 
-                // Handle node type filtering
-                if (selectedNodeTypes.length > 0 && !selectedNodeTypes.includes(d.type)) {
+                // Handle node type filtering - if no types selected, hide all
+                if (selectedNodeTypes.length === 0) {
+                    show = false;
+                } else if (!selectedNodeTypes.includes(d.type)) {
                     show = false;
                 }
 
                 // DLC filtering (only applies to characters and items, not tags)
-                if (d.type !== 'tag' && selectedDlcOptions.length > 0) {
-                    const isDlcContent = d.is_dlc;
-                    const showBase = selectedDlcOptions.includes('base');
-                    const showDlc = selectedDlcOptions.includes('dlc');
+                if (show && d.type !== 'tag') {
+                    if (selectedDlcOptions.length === 0) {
+                        show = false;
+                    } else {
+                        const isDlcContent = d.is_dlc;
+                        const showBase = selectedDlcOptions.includes('base');
+                        const showDlc = selectedDlcOptions.includes('dlc');
 
-                    if (isDlcContent && !showDlc) show = false;
-                    if (!isDlcContent && !showBase) show = false;
+                        if (isDlcContent && !showDlc) show = false;
+                        if (!isDlcContent && !showBase) show = false;
+                    }
                 }
 
-                // Tag filtering - show if node has any of the selected tags
-                if (selectedTags.length > 0 && d.type !== 'tag') {
-                    const hasSelectedTag = d.tags.some(tag => selectedTags.includes(tag));
-                    if (!hasSelectedTag) show = false;
+                // Tag filtering - show if node has any of the selected tags OR has no tags
+                if (show && d.type !== 'tag') {
+                    if (selectedTags.length === 0) {
+                        show = false;
+                    } else {
+                        // Show if node has no tags OR has any of the selected tags
+                        const hasNoTags = !d.tags || d.tags.length === 0;
+                        const hasSelectedTag = d.tags && d.tags.some(tag => selectedTags.includes(tag));
+                        if (!hasNoTags && !hasSelectedTag) show = false;
+                    }
                 }
 
                 // For tag nodes, show if the tag itself is selected
-                if (d.type === 'tag' && selectedTags.length > 0) {
-                    if (!selectedTags.includes(d.name)) show = false;
+                if (show && d.type === 'tag') {
+                    if (selectedTags.length === 0) {
+                        show = false;
+                    } else if (!selectedTags.includes(d.name)) {
+                        show = false;
+                    }
                 }
 
                 return show && showLabels ? 'block' : 'none';

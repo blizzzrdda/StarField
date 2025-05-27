@@ -36392,61 +36392,16 @@
                 // Use embedded data
                 networkData = EMBEDDED_NETWORK_DATA;
                 console.log('Network data loaded from embedded source:', networkData);
-                
+
                 setupVisualization();
                 populateControls();
                 updateStats();
                 createNetwork();
-                
+
             } catch (error) {
                 console.error('Error initializing visualization:', error);
-                document.getElementById('stats-content').innerHTML = 
-                    '<p style="color: red;">Error initializing visualization. Please check the console for details.</p>';
-            }
-        }
-                } catch (fetchError) {
-                    // Fallback: try to load from embedded data or show instructions
-                    console.warn('Could not fetch data file, trying alternative methods...', fetchError);
-
-                    // Check if we're running from file:// protocol
-                    if (window.location.protocol === 'file:') {
-                        document.getElementById('stats-content').innerHTML = `
-                            <div style="color: #e74c3c; text-align: center; padding: 20px;">
-                                <h4>🚨 Local File Access Issue</h4>
-                                <p>The visualization needs to load data via HTTP. Please use one of these options:</p>
-                                <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin: 10px 0; text-align: left;">
-                                    <strong>Option 1 - Python Server:</strong><br>
-                                    <code>python -m http.server 8000</code><br>
-                                    Then open: <a href="http://localhost:8000/brotato_network.html">http://localhost:8000/brotato_network.html</a>
-                                </div>
-                                <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin: 10px 0; text-align: left;">
-                                    <strong>Option 2 - Node.js Server:</strong><br>
-                                    <code>npx http-server -p 8000</code><br>
-                                    Then open: <a href="http://localhost:8000/brotato_network.html">http://localhost:8000/brotato_network.html</a>
-                                </div>
-                                <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin: 10px 0; text-align: left;">
-                                    <strong>Option 3 - Use the embedded version:</strong><br>
-                                    Open <code>brotato_network_embedded.html</code> instead
-                                </div>
-                            </div>
-                        `;
-                        return;
-                    } else {
-                        throw fetchError;
-                    }
-                }
-
-                console.log('Network data loaded:', networkData);
-
-                setupVisualization();
-                populateControls();
-                updateStats();
-                createNetwork();
-
-            } catch (error) {
-                console.error('Error loading network data:', error);
                 document.getElementById('stats-content').innerHTML =
-                    '<p style="color: red;">Error loading data. Please ensure brotato_network_data.json exists and run process_data.js if needed.</p>';
+                    '<p style="color: red;">Error initializing visualization. Please check the console for details.</p>';
             }
         }
 

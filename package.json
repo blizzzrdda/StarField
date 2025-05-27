@@ -6,11 +6,13 @@
   "scripts": {
     "process": "node process_data.js",
     "embed": "node create_embedded_version.js",
+    "test": "node test_visualization.js",
     "serve": "python -m http.server 8000",
     "serve-node": "npx http-server -p 8000",
     "build": "npm run process && npm run embed",
     "start": "npm run build && npm run serve",
-    "dev": "npm run process && npm run embed"
+    "dev": "npm run process && npm run embed",
+    "validate": "npm run test"
   },
   "keywords": [
     "brotato",

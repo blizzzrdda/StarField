@@ -14,7 +14,7 @@ function loadData() {
     try {
         const charactersData = JSON.parse(fs.readFileSync('brotato_characters.json', 'utf8'));
         const itemsData = JSON.parse(fs.readFileSync('brotato_items.json', 'utf8'));
-        
+
         return {
             characters: charactersData.characters,
             items: itemsData.items
@@ -28,17 +28,17 @@ function loadData() {
 // Extract all unique tags from both datasets
 function extractAllTags(characters, items) {
     const tagSet = new Set();
-    
+
     // Add character tags
     characters.forEach(character => {
         character.tags.forEach(tag => tagSet.add(tag));
     });
-    
+
     // Add item tags
     items.forEach(item => {
         item.tags.forEach(tag => tagSet.add(tag));
     });
-    
+
     return Array.from(tagSet).sort();
 }
 
@@ -46,7 +46,20 @@ function extractAllTags(characters, items) {
 function createNodes(characters, items, allTags) {
     const nodes = [];
     let nodeId = 0;
-    
+
+    // Create tag nodes first
+    allTags.forEach(tag => {
+        nodes.push({
+            id: nodeId++,
+            name: tag,
+            type: 'tag',
+            tags: [tag], // Tag nodes contain themselves
+            is_dlc: false, // Tags are not DLC-specific
+            character_count: 0, // Will be calculated later
+            item_count: 0 // Will be calculated later
+        });
+    });
+
     // Create character nodes
     characters.forEach(character => {
         nodes.push({
@@ -60,7 +73,7 @@ function createNodes(characters, items, allTags) {
             unlocks: character.unlocks
         });
     });
-    
+
     // Create item nodes
     items.forEach(item => {
         nodes.push({
@@ -76,40 +89,58 @@ function createNodes(characters, items, allTags) {
             unlocked_by: item.unlocked_by
         });
     });
-    
+
+    // Calculate tag node statistics
+    const tagNodes = nodes.filter(node => node.type === 'tag');
+    const characterNodes = nodes.filter(node => node.type === 'character');
+    const itemNodes = nodes.filter(node => node.type === 'item');
+
+    tagNodes.forEach(tagNode => {
+        tagNode.character_count = characterNodes.filter(char => char.tags.includes(tagNode.name)).length;
+        tagNode.item_count = itemNodes.filter(item => item.tags.includes(tagNode.name)).length;
+        tagNode.total_count = tagNode.character_count + tagNode.item_count;
+    });
+
     return nodes;
 }
 
-// Create links between nodes that share tags
+// Create links between items/characters and their tags
 function createLinks(nodes) {
     const links = [];
     const linkSet = new Set(); // To avoid duplicate links
-    
-    // Create links between nodes that share at least one tag
-    for (let i = 0; i < nodes.length; i++) {
-        for (let j = i + 1; j < nodes.length; j++) {
-            const nodeA = nodes[i];
-            const nodeB = nodes[j];
-            
-            // Find shared tags
-            const sharedTags = nodeA.tags.filter(tag => nodeB.tags.includes(tag));
-            
-            if (sharedTags.length > 0) {
-                const linkId = `${Math.min(nodeA.id, nodeB.id)}-${Math.max(nodeA.id, nodeB.id)}`;
-                
+
+    // Get tag nodes and non-tag nodes
+    const tagNodes = nodes.filter(node => node.type === 'tag');
+    const contentNodes = nodes.filter(node => node.type === 'character' || node.type === 'item');
+
+    // Create a map for quick tag node lookup
+    const tagNodeMap = new Map();
+    tagNodes.forEach(tagNode => {
+        tagNodeMap.set(tagNode.name, tagNode);
+    });
+
+    // Create links from characters and items to their tags
+    contentNodes.forEach(contentNode => {
+        contentNode.tags.forEach(tagName => {
+            const tagNode = tagNodeMap.get(tagName);
+            if (tagNode) {
+                const linkId = `${contentNode.id}-${tagNode.id}`;
+
                 if (!linkSet.has(linkId)) {
                     linkSet.add(linkId);
                     links.push({
-                        source: nodeA.id,
-                        target: nodeB.id,
-                        shared_tags: sharedTags,
-                        strength: sharedTags.length // Link strength based on number of shared tags
+                        source: contentNode.id,
+                        target: tagNode.id,
+                        tag: tagName,
+                        source_type: contentNode.type,
+                        target_type: 'tag',
+                        strength: 1 // All tag connections have equal strength
                     });
                 }
             }
-        }
-    }
-    
+        });
+    });
+
     return links;
 }
 
@@ -117,7 +148,7 @@ function createLinks(nodes) {
 function createGroups(allTags, nodes) {
     const groups = allTags.map((tag, index) => {
         const nodesInGroup = nodes.filter(node => node.tags.includes(tag));
-        
+
         return {
             id: index,
             name: tag,
@@ -127,7 +158,7 @@ function createGroups(allTags, nodes) {
             total_count: nodesInGroup.length
         };
     });
-    
+
     // Filter out empty groups and sort by size
     return groups
         .filter(group => group.total_count > 0)
@@ -138,14 +169,21 @@ function createGroups(allTags, nodes) {
 function generateStats(characters, items, nodes, links, groups, allTags) {
     const characterTags = new Set();
     const itemTags = new Set();
-    
+
     characters.forEach(char => char.tags.forEach(tag => characterTags.add(tag)));
     items.forEach(item => item.tags.forEach(tag => itemTags.add(tag)));
-    
+
+    // Count nodes by type
+    const tagNodes = nodes.filter(node => node.type === 'tag').length;
+    const characterNodes = nodes.filter(node => node.type === 'character').length;
+    const itemNodes = nodes.filter(node => node.type === 'item').length;
+
     return {
         total_characters: characters.length,
         total_items: items.length,
         total_nodes: nodes.length,
+        total_content_nodes: characterNodes + itemNodes, // Characters + Items
+        total_tag_nodes: tagNodes,
         total_links: links.length,
         total_tags: allTags.length,
         character_only_tags: Array.from(characterTags).filter(tag => !itemTags.has(tag)).length,
@@ -162,22 +200,22 @@ function generateStats(characters, items, nodes, links, groups, allTags) {
 function processData() {
     console.log('Loading Brotato data...');
     const { characters, items } = loadData();
-    
+
     console.log('Extracting tags...');
     const allTags = extractAllTags(characters, items);
-    
+
     console.log('Creating nodes...');
     const nodes = createNodes(characters, items, allTags);
-    
+
     console.log('Creating links...');
     const links = createLinks(nodes);
-    
+
     console.log('Creating groups...');
     const groups = createGroups(allTags, nodes);
-    
+
     console.log('Generating statistics...');
     const stats = generateStats(characters, items, nodes, links, groups, allTags);
-    
+
     // Create the final network data structure
     const networkData = {
         metadata: {
@@ -191,21 +229,22 @@ function processData() {
         groups: groups,
         tags: allTags
     };
-    
+
     // Save the processed data
     const outputFile = 'brotato_network_data.json';
     fs.writeFileSync(outputFile, JSON.stringify(networkData, null, 2));
-    
+
     console.log(`\n✅ Network data processed successfully!`);
     console.log(`📊 Statistics:`);
     console.log(`   - Characters: ${stats.total_characters} (${stats.dlc_characters} DLC)`);
     console.log(`   - Items: ${stats.total_items} (${stats.dlc_items} DLC)`);
-    console.log(`   - Total nodes: ${stats.total_nodes}`);
-    console.log(`   - Total links: ${stats.total_links}`);
+    console.log(`   - Tag nodes: ${stats.total_tag_nodes}`);
+    console.log(`   - Total nodes: ${stats.total_nodes} (${stats.total_content_nodes} content + ${stats.total_tag_nodes} tags)`);
+    console.log(`   - Total links: ${stats.total_links} (content-to-tag connections)`);
     console.log(`   - Total tags: ${stats.total_tags}`);
     console.log(`   - Largest group: "${stats.largest_group}" (${stats.largest_group_size} nodes)`);
     console.log(`\n📁 Output saved to: ${outputFile}`);
-    
+
     return networkData;
 }
 

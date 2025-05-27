@@ -1,0 +1,943 @@
+{
+  "total_characters": 62,
+  "characters": [
+    {
+      "name": "Well Rounded",
+      "stats": "+5 Max Hp +5% Speed +8 Harvesting",
+      "unlocked_by": "Unlocked by default",
+      "unlocks": [
+        {
+          "name": "Potato",
+          "type": "item"
+        }
+      ],
+      "tags": [],
+      "is_dlc": false
+    },
+    {
+      "name": "Brawler",
+      "stats": "+50% Attack Speed with Unarmed weapons You start with 1 Fist +15% Dodge -50 Range -50 Ranged Damage",
+      "unlocked_by": "Unlocked by default",
+      "unlocks": [
+        {
+          "name": "Power Fist",
+          "type": "item"
+        }
+      ],
+      "tags": [
+        "Melee Damage"
+      ],
+      "is_dlc": false
+    },
+    {
+      "name": "Crazy",
+      "stats": "+100 Range with Precise weapons +25% Attack Speed You start with 1 Knife -30% Dodge -10 Engineering -10 Ranged Damage",
+      "unlocked_by": "Unlocked by default",
+      "unlocks": [
+        {
+          "name": "Hunting Trophy",
+          "type": "item"
+        }
+      ],
+      "tags": [
+        "Crit Chance",
+        "Melee Damage"
+      ],
+      "is_dlc": false
+    },
+    {
+      "name": "Ranger",
+      "stats": "+50 Range You start with 1 Pistol Ranged Damage modifications are increased by 50% You can't equip melee weapons Max HP modifications are reduced by 25%",
+      "unlocked_by": "Unlocked by default",
+      "unlocks": [
+        {
+          "name": "Night Goggles",
+          "type": "item"
+        }
+      ],
+      "tags": [
+        "Ranged Damage",
+        "Range"
+      ],
+      "is_dlc": false
+    },
+    {
+      "name": "Mage",
+      "stats": "Elemental Damage modifications are increased by 25% You start with 1 Snake You start with 1 Scared Sausage Melee Damage Modifications are reduced by -100% Ranged Damage Modifications are reduced by -100% Engineering Modifications are reduced by -50%",
+      "unlocked_by": "Unlocked by default",
+      "unlocks": [
+        {
+          "name": "Thunder Sword",
+          "type": "item"
+        }
+      ],
+      "tags": [
+        "Elemental Damage"
+      ],
+      "is_dlc": false
+    },
+    {
+      "name": "Chunky",
+      "stats": "Max HP modifications are increased by 25% +1% Damage for every 3 Max HP you have +3 HP recovered from consumables -100% Life Steal HP Regeneration modifications are reduced by 50% Dodge modifications are reduced by 50% Speed modifications are reduced by 100%",
+      "unlocked_by": "Die for the first time",
+      "unlocks": [
+        {
+          "name": "Potato Thrower",
+          "type": "item"
+        }
+      ],
+      "tags": [
+        "Max HP",
+        "Luck",
+        "Consumable"
+      ],
+      "is_dlc": false
+    },
+    {
+      "name": "Old",
+      "stats": "-25% Enemy speed +10 Harvesting -33%Map Size -10% Enemies -10% Speed",
+      "unlocked_by": "Kill 300 enemies",
+      "unlocks": [
+        {
+          "name": "Snail",
+          "type": "item"
+        }
+      ],
+      "tags": [
+        "Less Enemies",
+        "Less Enemy Speed"
+      ],
+      "is_dlc": false
+    },
+    {
+      "name": "Lucky",
+      "stats": "+100 Luck Luck modifications are increased by 25% +75% chance to deal 1 (15%Luck) damage to a random enemy when you pick up a material -60% Attack Speed -50% XP Gain",
+      "unlocked_by": "Collect 300 materials",
+      "unlocks": [
+        {
+          "name": "Lucky Charm",
+          "type": "item"
+        }
+      ],
+      "tags": [
+        "Luck",
+        "Pickup",
+        "Exploration"
+      ],
+      "is_dlc": false
+    },
+    {
+      "name": "Mutant",
+      "stats": "-66% XP required to level up +50% Items Price",
+      "unlocked_by": "Kill 2000 enemies",
+      "unlocks": [
+        {
+          "name": "Octopus",
+          "type": "item"
+        }
+      ],
+      "tags": [
+        "XP Gain"
+      ],
+      "is_dlc": false
+    },
+    {
+      "name": "Generalist",
+      "stats": "+2 Melee Damage for every 1 Ranged Damage you have +1 Ranged Damage for every 2 Melee Damage you have You can only equip 3 melee weapons and 3 ranged weapons at a time",
+      "unlocked_by": "Collect 2000 materials",
+      "unlocks": [
+        {
+          "name": "Big Arms",
+          "type": "item"
+        }
+      ],
+      "tags": [
+        "Melee Damage",
+        "Ranged Damage"
+      ],
+      "is_dlc": false
+    },
+    {
+      "name": "Loud",
+      "stats": "+30% Damage +50% Enemies -3 Harvesting at the end of a wave",
+      "unlocked_by": "Kill 5000 enemies",
+      "unlocks": [
+        {
+          "name": "Rip and Tear",
+          "type": "item"
+        }
+      ],
+      "tags": [
+        "More Enemies"
+      ],
+      "is_dlc": false
+    },
+    {
+      "name": "Multitasker",
+      "stats": "+20% Damage You can equip up to 12 weapons at a time -5% Damage for every weapon you have",
+      "unlocked_by": "Collect 5000 materials",
+      "unlocks": [
+        {
+          "name": "Chopper",
+          "type": "item"
+        }
+      ],
+      "tags": [],
+      "is_dlc": false
+    },
+    {
+      "name": "Wildling",
+      "stats": "+30% Life Steal with Primitive weapons You start with 1 Stick You can't equip weapons above tier 2",
+      "unlocked_by": "Kill 10000 enemies",
+      "unlocks": [
+        {
+          "name": "Hatchet",
+          "type": "item"
+        }
+      ],
+      "tags": [],
+      "is_dlc": false
+    },
+    {
+      "name": "Pacifist",
+      "stats": "Gain 0.65 material and XP for every living enemy at the end of a wave You start with 1 Lumberjack Shirt -100% Damage -100 Engineering",
+      "unlocked_by": "Collect 10000 materials",
+      "unlocks": [
+        {
+          "name": "Panda",
+          "type": "item"
+        }
+      ],
+      "tags": [
+        "Max HP",
+        "HP Regeneration",
+        "Armor"
+      ],
+      "is_dlc": false
+    },
+    {
+      "name": "Gladiator",
+      "stats": "+20% Attack Speed for every different weapon you have +5 Melee Damage You can't equip ranged weapons -40% Attack Speed -30 Luck",
+      "unlocked_by": "Kill 20000 enemies",
+      "unlocks": [
+        {
+          "name": "Spider",
+          "type": "item"
+        }
+      ],
+      "tags": [
+        "Melee Damage"
+      ],
+      "is_dlc": false
+    },
+    {
+      "name": "Saver",
+      "stats": "+15 Harvesting +1% Damage for every 25 Materials you have You start with 1 Piggy Bank +50% Item & Weapon Price",
+      "unlocked_by": "Collect 20000 materials",
+      "unlocks": [
+        {
+          "name": "Padding",
+          "type": "item"
+        }
+      ],
+      "tags": [],
+      "is_dlc": false
+    },
+    {
+      "name": "Sick",
+      "stats": "+12 Max HP +25% Life Steal You take 1 damage per second (does not give invulnerability time) -100 HP Regeneration",
+      "unlocked_by": "Reach -5 % HP Regeneration",
+      "unlocks": [
+        {
+          "name": "Whetstone",
+          "type": "item"
+        }
+      ],
+      "tags": [
+        "Life Steal"
+      ],
+      "is_dlc": false
+    },
+    {
+      "name": "Farmer",
+      "stats": "+20 Harvesting Harvesting increases by an additional 3% at the end of a wave +1 Harvesting when eating a consumable while at full health -50% materials dropped",
+      "unlocked_by": "Reach +200 Harvesting",
+      "unlocks": [
+        {
+          "name": "Wheat",
+          "type": "item"
+        }
+      ],
+      "tags": [
+        "Harvesting",
+        "Consumable"
+      ],
+      "is_dlc": false
+    },
+    {
+      "name": "Ghost",
+      "stats": "+10 Damage with Ethereal weapons +30% Dodge Dodge is capped at 90% -100 Armor",
+      "unlocked_by": "Reach +60% Dodge",
+      "unlocks": [
+        {
+          "name": "Ritual",
+          "type": "item"
+        }
+      ],
+      "tags": [
+        "Dodge"
+      ],
+      "is_dlc": false
+    },
+    {
+      "name": "Speedy",
+      "stats": "+30% Speed +1 Melee Damage for every 2% Speed you have -100 Armor while standing still -3 Armor",
+      "unlocked_by": "Reach +50% Speed",
+      "unlocks": [
+        {
+          "name": "Fin",
+          "type": "item"
+        }
+      ],
+      "tags": [
+        "Speed"
+      ],
+      "is_dlc": false
+    },
+    {
+      "name": "Entrepreneur",
+      "stats": "-25% Items Price Harvesting modifications are increased by 50% Gain 25% more materials from recycling items -100% of your materials at the start of waves Damage modifications are reduced by 50%",
+      "unlocked_by": "Hold 3000 Materials",
+      "unlocks": [
+        {
+          "name": "Bowler Hat",
+          "type": "item"
+        }
+      ],
+      "tags": [
+        "Harvesting",
+        "Economy"
+      ],
+      "is_dlc": false
+    },
+    {
+      "name": "Engineer",
+      "stats": "+10 Engineering Engineering modifications are increased by 25% You start with 1 Wrench Structures spawn close to each other Damage modifications are reduced by 50%",
+      "unlocked_by": "Get 5 turrets on the map simultaneously",
+      "unlocks": [
+        {
+          "name": "Robot Arm",
+          "type": "item"
+        }
+      ],
+      "tags": [
+        "Engineering",
+        "Structure"
+      ],
+      "is_dlc": false
+    },
+    {
+      "name": "Explorer",
+      "stats": "More trees spawn You start with 1 Lumberjack Shirt +10% Speed +50% pickup range +33% Map Size +25% Enemies -50% materials dropped from enemies +10% Enemy Speed -40% Damage",
+      "unlocked_by": "Kill 50 trees",
+      "unlocks": [
+        {
+          "name": "Compass",
+          "type": "item"
+        }
+      ],
+      "tags": [
+        "Speed",
+        "Exploration",
+        "Consumable"
+      ],
+      "is_dlc": false
+    },
+    {
+      "name": "Doctor",
+      "stats": "+200% Attack Speed with Medical weapons +5 HP Regeneration HP Regeneration modifications are increased by 100% +5 Harvesting -100% Attack Speed Armor modifications are reduced by 50%",
+      "unlocked_by": "Heal 200 HP in one wave",
+      "unlocks": [
+        {
+          "name": "Medikit",
+          "type": "item"
+        }
+      ],
+      "tags": [
+        "HP Regeneration"
+      ],
+      "is_dlc": false
+    },
+    {
+      "name": "Hunter",
+      "stats": "+100 Range +1% Damage for every 10 Range you have Crit Chance modifications are increased by 25% Harvesting modifications are reduced by 100% Max HP modifications are reduced by 33%",
+      "unlocked_by": "Reach +300 Range",
+      "unlocks": [
+        {
+          "name": "Sniper Gun",
+          "type": "item"
+        }
+      ],
+      "tags": [
+        "Range",
+        "Crit Chance"
+      ],
+      "is_dlc": false
+    },
+    {
+      "name": "Artificer",
+      "stats": "+175% Explosion Damage +4% Explosion Size for every 1 Elemental Damage you have +100% Damage with Tool weapons -100% Damage Armor modifications are reduced by 50%",
+      "unlocked_by": "Kill 15 Enemies with a single explosion",
+      "unlocks": [
+        {
+          "name": "Explosive Shells",
+          "type": "item"
+        }
+      ],
+      "tags": [
+        "Explosive (Item Tag)"
+      ],
+      "is_dlc": false
+    },
+    {
+      "name": "Arms Dealer",
+      "stats": "-95% Weapons Price +30 Harvesting Damage modifications are increased by +33% You start with 1 Dangerous Bunny Shops always sell at least 1 weapon All of your weapons are destroyed when entering a shop",
+      "unlocked_by": "Recycle 12 weapons during a run",
+      "unlocks": [
+        {
+          "name": "Anvil",
+          "type": "item"
+        }
+      ],
+      "tags": [],
+      "is_dlc": false
+    },
+    {
+      "name": "Streamer",
+      "stats": "+3% of your materials per second while standing still ( +25 max) +40% Damage while moving +40% Attack Speed while moving +2 Armor for every 1 Structure you have -50% materials dropped -1% Damage for every 15 Materials you have -1% Speed for every 30 Materials you have",
+      "unlocked_by": "Reach -20% Speed",
+      "unlocks": [
+        {
+          "name": "Community Support",
+          "type": "item"
+        }
+      ],
+      "tags": [
+        "Structure"
+      ],
+      "is_dlc": false
+    },
+    {
+      "name": "Cyborg",
+      "stats": "You start with 1 Minigun Ranged Damage modifications are increased by 200% 100% of your Ranged Damage are temporarily converted into Engineering halfway through a wave ( 1 Ranged Damage = 2 Engineering ) Engineering modifications are reduced by 75% Melee modifications are reduced by 100% Elemental modifications are reduced by 100%",
+      "unlocked_by": "Reach 10 Ranged Damage and get 3 structures at the same time",
+      "unlocks": [
+        {
+          "name": "Improved Tools",
+          "type": "item"
+        }
+      ],
+      "tags": [
+        "Structure",
+        "Ranged Damage"
+      ],
+      "is_dlc": false
+    },
+    {
+      "name": "Glutton",
+      "stats": "+50 Luck +1 % Explosion Damage when picking up a consumable while at maximum health Consumable have a 100% chance to explode for 10 (500% [Melee Damage.png] ) damage when picked up +25 % Items Price -25 % XP Gain",
+      "unlocked_by": "Pick up 20 consumables during a run",
+      "unlocks": [
+        {
+          "name": "Spicy Sauce",
+          "type": "item"
+        }
+      ],
+      "tags": [
+        "Consumable",
+        "Explosive (Item Tag)",
+        "Melee Damage"
+      ],
+      "is_dlc": false
+    },
+    {
+      "name": "Jack",
+      "stats": "+125% damage against bosses and elites +200% materials dropped -70% Enemies +175 % Enemy health +35 % Enemy damage Note: On higher danger levels, only Elites spawn, never hordes",
+      "unlocked_by": "Kill a boss or an elite in less than 15 seconds",
+      "unlocks": [
+        {
+          "name": "Giant Belt",
+          "type": "item"
+        }
+      ],
+      "tags": [],
+      "is_dlc": false
+    },
+    {
+      "name": "Lich",
+      "stats": "+10 HP Regeneration +10 % Life Steal 100% chance to deal 10 ( [Max HP.png] ) damage to a random enemy when you heal Damage modifications are reduced by 50%",
+      "unlocked_by": "Reach +100 Max HP",
+      "unlocks": [
+        {
+          "name": "Tentacle",
+          "type": "item"
+        }
+      ],
+      "tags": [
+        "Max HP",
+        "HP Regeneration",
+        "Life Steal"
+      ],
+      "is_dlc": false
+    },
+    {
+      "name": "Apprentice",
+      "stats": "+2 Melee Damage when you level up +1 Ranged Damage when you level up +1 Elemental Damage when you level up +1 Engineering when you level up -2 Max HP when you level up",
+      "unlocked_by": "Reach level 20",
+      "unlocks": [
+        {
+          "name": "Quarterstaff",
+          "type": "item"
+        }
+      ],
+      "tags": [
+        "XP Gain"
+      ],
+      "is_dlc": false
+    },
+    {
+      "name": "Cryptid",
+      "stats": "More trees spawn (+6) Gain 12 material and XP for every living tree at the end of a wave +3 HP Regeneration for every current living tree Dodge is capped at 70% +3 Attack Speed until the end of the wave when you dodge an attack -100 % Life Steal -100 Range -50% materials dropped from enemies",
+      "unlocked_by": "Finish a wave with 10 or more living trees",
+      "unlocks": [
+        {
+          "name": "Claw",
+          "type": "item"
+        }
+      ],
+      "tags": [
+        "Exploration",
+        "Dodge"
+      ],
+      "is_dlc": false
+    },
+    {
+      "name": "Fisherman",
+      "stats": "+5 Max HP +20 Harvesting Shops always sell a Bait -100% Bait price +2 Harvesting for every 1 Bait you have Baits make some special enemies spawn throughout all future waves -50% materials dropped from enemies",
+      "unlocked_by": "Get 2 Bait during a run",
+      "unlocks": [
+        {
+          "name": "Lure",
+          "type": "item"
+        }
+      ],
+      "tags": [],
+      "is_dlc": false
+    },
+    {
+      "name": "Golem",
+      "stats": "+20 Max HP Max HP modifications are increased by 33% Armor modifications are increased by 33% +40 % Attack Speed when you have less than 50% health +20 % Speed when you have less than 50% health You can't heal in any way",
+      "unlocked_by": "Finish a wave with 1 HP",
+      "unlocks": [
+        {
+          "name": "Stone Skin",
+          "type": "item"
+        }
+      ],
+      "tags": [
+        "Max HP",
+        "Armor"
+      ],
+      "is_dlc": false
+    },
+    {
+      "name": "King",
+      "stats": "+50 Luck +25 % Damage for every Tier IV weapon you have +25% Attack Speed for every Tier IV weapon you have +5 Max HP for every different Tier IV item you have -15% Damage for every Tier I weapon you have -15% Attack Speed for every Tier I weapon you have -2 Max HP for every different Tier I item you have UNLISTED BONUS: Starting weapon is Tier II",
+      "unlocked_by": "Get 3 tier IV weapons at once",
+      "unlocks": [
+        {
+          "name": "Excalibur",
+          "type": "item"
+        }
+      ],
+      "tags": [],
+      "is_dlc": false
+    },
+    {
+      "name": "Renegade",
+      "stats": "+2 projectiles Projectiles pierce through 1 additional target +10 % Damage for every different Tier I item you have You can't equip melee weapons -400% Damage -50% accuracy % Damage modifications are reduced by 80%",
+      "unlocked_by": "Get 10 different tier I items during a run",
+      "unlocks": [
+        {
+          "name": "Fairy",
+          "type": "item"
+        }
+      ],
+      "tags": [],
+      "is_dlc": false
+    },
+    {
+      "name": "One Armed",
+      "stats": "+200% Attack Speed Damage modifications are increased by 100% You can only equip one weapon at a time",
+      "unlocked_by": "Win a run in Danger 0",
+      "unlocks": [
+        {
+          "name": "Focus",
+          "type": "item"
+        }
+      ],
+      "tags": [
+        "Damage"
+      ],
+      "is_dlc": false
+    },
+    {
+      "name": "Bull",
+      "stats": "+20 Max HP +15 HP Regeneration +10 Armor HP Regeneration modifications are increased by 50% You explode for 30 (300% [Melee Damage.png] 300% [Ranged Damage.png] 300% [Elemental Damage.png] ) damage when you take damage This explosion has a 1.5x crit multiplier You can't equip weapons",
+      "unlocked_by": "Win a run in Danger 1",
+      "unlocks": [
+        {
+          "name": "Gnome",
+          "type": "item"
+        }
+      ],
+      "tags": [
+        "Armor",
+        "HP Regeneration",
+        "Explosive (Item Tag)"
+      ],
+      "is_dlc": false
+    },
+    {
+      "name": "Soldier",
+      "stats": "+50% Damage while standing still +50% Attack Speed while standing still +10% Speed +200% pickup range +15 Knockback You cant attack while moving",
+      "unlocked_by": "Win a run in Danger 2",
+      "unlocks": [
+        {
+          "name": "Nuclear Launcher",
+          "type": "item"
+        }
+      ],
+      "tags": [
+        "Stand Still"
+      ],
+      "is_dlc": false
+    },
+    {
+      "name": "Masochist",
+      "stats": "+5% Damage when you take damage until the end of the wave +10 Max HP +20 HP Regeneration +8 Armor -100% Damage",
+      "unlocked_by": "Win a run in Danger 3",
+      "unlocks": [
+        {
+          "name": "Spiky Shield",
+          "type": "item"
+        }
+      ],
+      "tags": [
+        "Max HP",
+        "Armor",
+        "HP Regeneration",
+        "Life Steal"
+      ],
+      "is_dlc": false
+    },
+    {
+      "name": "Knight",
+      "stats": "+2 Melee Damage for every 1 Armor you have +3 Armor You can't equip ranged weapons You can only equip tier 2 weapons or above % Attack Speed modifications are reduced by 50% Harvesting modifications are reduced by 80%",
+      "unlocked_by": "Win a run in Danger 4",
+      "unlocks": [
+        {
+          "name": "Plasma Sledge",
+          "type": "item"
+        }
+      ],
+      "tags": [
+        "Armor"
+      ],
+      "is_dlc": false
+    },
+    {
+      "name": "Demon",
+      "stats": "+50% of your Materials are converted into Max HP at the end of a wave ( 13 Materials=1 Max HP ) You buy items using Max HP instead of materials",
+      "unlocked_by": "Win a run in Danger 5",
+      "unlocks": [
+        {
+          "name": "Obliterator",
+          "type": "item"
+        }
+      ],
+      "tags": [],
+      "is_dlc": false
+    },
+    {
+      "name": "Baby",
+      "stats": "+12 Harvesting -20 % Items Price You gain a weapon slot when you level up instead of a stat upgrade (max: 24 ) You start with one weapon slot Shops always sell at least one weapon +130% XP required to level up",
+      "unlocked_by": "Reach level 10 before wave 6",
+      "unlocks": [
+        {
+          "name": "Celery Tea",
+          "type": "item"
+        }
+      ],
+      "tags": [
+        "XP Gain"
+      ],
+      "is_dlc": false
+    },
+    {
+      "name": "Vagabond",
+      "stats": "Equipped weapons always contribute to the class bonuses of other equipped weapons You can't equip two of the same weapon at the same time -5 Armor -5 % Dodge Luck modifications are reduced by 50% Harvesting modifications are reduced by 50%",
+      "unlocked_by": "Have 6 different weapons at once",
+      "unlocks": [
+        {
+          "name": "Jelly",
+          "type": "item"
+        }
+      ],
+      "tags": [],
+      "is_dlc": false
+    },
+    {
+      "name": "Technomage",
+      "stats": "You start with 2 Turret +5 % Structure attack speed for every permanent 1 Elemental Damage you have +2 Elemental Damage for every 1 Structure you have +75% XP required to level up Melee Damage modifications are reduced by 100% Ranged Damage modifications are reduced by 100%",
+      "unlocked_by": "Reach 10 Elemental Damage and get 3 structures at the same time",
+      "unlocks": [
+        {
+          "name": "Particle Accelerator",
+          "type": "item"
+        }
+      ],
+      "tags": [
+        "Elemental Damage",
+        "Engineering",
+        "Structure"
+      ],
+      "is_dlc": false
+    },
+    {
+      "name": "Vampire",
+      "stats": "+2 % Damage for every 1% of missing health +1 % Life Steal for every 3% of missing health +1 Armor for every 5% of missing health Max HP modifications are reduced by 25% -60 % Damage -100 HP Regeneration -100 HP recovered from consumables",
+      "unlocked_by": "Reach +40 % Life Steal",
+      "unlocks": [
+        {
+          "name": "Decomposing Flesh",
+          "type": "item"
+        }
+      ],
+      "tags": [
+        "Life Steal"
+      ],
+      "is_dlc": false
+    },
+    {
+      "name": "Sailor",
+      "stats": "+200% damage with Naval weapons against cursed enemies +25 Curse -25 % Damage You can only equip tier II weapons or above Dodge is capped at 20% Harvesting modifications are reduced by 100%",
+      "unlocked_by": "Unlocked by default",
+      "unlocks": [
+        {
+          "name": "Treasure Map",
+          "type": "item"
+        }
+      ],
+      "tags": [
+        "Curse"
+      ],
+      "is_dlc": true
+    },
+    {
+      "name": "Curious",
+      "stats": "You start with 1 Spyglass 2 additional loot aliens appear every wave All future loot aliens become stronger when you kill a loot alien +2 % XP Gain for every different Item you have -10 % Damage for every duplicate item or weapon you have +25 % Enemy health",
+      "unlocked_by": "Unlocked by default",
+      "unlocks": [
+        {
+          "name": "Pearl",
+          "type": "item"
+        }
+      ],
+      "tags": [
+        "Luck"
+      ],
+      "is_dlc": true
+    },
+    {
+      "name": "Builder",
+      "stats": "You start with 1 Builder's Turret Every 5 uncollected materials are converted into 1 % Structure attack speed and 1 Structure Range at the end of a wave Engineering modifications are increased by 50% +20 Harvesting You can't have structures -30% pickup range Damage modifications are reduced by 75%",
+      "unlocked_by": "Unlocked by default",
+      "unlocks": [
+        {
+          "name": "Lighthouse",
+          "type": "item"
+        }
+      ],
+      "tags": [
+        "Engineering"
+      ],
+      "is_dlc": true
+    },
+    {
+      "name": "Captain",
+      "stats": "+60 % XP Gain for every free weapon slot you have +100% stats gained from level upgrades +200% XP required to level up +2 % Enemy health at the end of a wave +2 % Enemy damage at the end of a wave",
+      "unlocked_by": "Unlocked by default",
+      "unlocks": [
+        {
+          "name": "Captain's Sword",
+          "type": "item"
+        }
+      ],
+      "tags": [
+        "XP Gain"
+      ],
+      "is_dlc": true
+    },
+    {
+      "name": "Creature",
+      "stats": "Weapon damage additionally scales with 35% Curse You start with 1 cursed Fish Hook +1 Curse when you level up -10 Range at the end of a wave -5 % XP Gain at the end of a wave",
+      "unlocked_by": "Unlocked by default",
+      "unlocks": [
+        {
+          "name": "Barnacle",
+          "type": "item"
+        }
+      ],
+      "tags": [
+        "Curse",
+        "XP Gain"
+      ],
+      "is_dlc": true
+    },
+    {
+      "name": "Chef",
+      "stats": "+35 Luck +200% damage from non elemental sources against burning targets Consumables explode for 5x 1 ( +100% [Elemental Damage.png] ) burning damage when picked up You start with 1 Scared Sausage +100 % Enemy health Elemental Damage modifications are reduced by 75%",
+      "unlocked_by": "Have at least 25 enemies burning at the same time",
+      "unlocks": [
+        {
+          "name": "Spoon",
+          "type": "item"
+        }
+      ],
+      "tags": [],
+      "is_dlc": true
+    },
+    {
+      "name": "Druid",
+      "stats": "+5 Max HP +15 Luck Enemies have a higher chance of dropping fruits 33% chance to get +1 Luck when you pick up a fruit 33% of fruits are poisoned and hurt you (ignores Dodge and Armor) -100 HP Regeneration -100 % Life Steal Engineering modifications are reduced by 50%",
+      "unlocked_by": "Collect 250 consumables by the end of wave 20",
+      "unlocks": [
+        {
+          "name": "Cauldron",
+          "type": "item"
+        }
+      ],
+      "tags": [
+        "Consumable",
+        "Luck"
+      ],
+      "is_dlc": true
+    },
+    {
+      "name": "Dwarf",
+      "stats": "+1 Engineering when killing at least 6 enemies with a direct weapon hit +1 Melee Damage for every permanent 2 Engineering you have You can't equip ranged weapons -20 % Dodge -100 % Attack Speed % Attack Speed modifications are reduced by 50%",
+      "unlocked_by": "Hit at least 25 enemies with a single melee attack",
+      "unlocks": [
+        {
+          "name": "War Hammer",
+          "type": "item"
+        }
+      ],
+      "tags": [
+        "Engineering",
+        "Structure"
+      ],
+      "is_dlc": true
+    },
+    {
+      "name": "Gangster",
+      "stats": "Can steal 1 item per shop Stealing from the shop can spawn an elite All future elites and bosses become stronger when you kill an elite or a boss +20 % Items Price Can't lock items",
+      "unlocked_by": "Reroll 10 times in a single shop",
+      "unlocks": [
+        {
+          "name": "Grenade Launcher",
+          "type": "item"
+        }
+      ],
+      "tags": [],
+      "is_dlc": true
+    },
+    {
+      "name": "Diver",
+      "stats": "You start with 1 Harpoon Gun -100% Harpoon Gun price +200 % Crit Damage with Precise weapons % Crit Chance modifications are increased by 25% +1 HP Regeneration for every 2 Melee Damage you have Enemies take 300% more damage for 3 seconds when hit by Ranged Damage -100 Ranged Damage +250 % Enemy health",
+      "unlocked_by": "Kill 1000 enemies that are more than 700 range away from you",
+      "unlocks": [
+        {
+          "name": "Starfish",
+          "type": "item"
+        }
+      ],
+      "tags": [
+        "Crit Chance",
+        "Melee Damage"
+      ],
+      "is_dlc": true
+    },
+    {
+      "name": "Hiker",
+      "stats": "Earn 5 materials for every 10 steps you take during a wave +1 Max HP for every 80 steps you take during a wave % Speed modifications are increased by 10% -5 % Speed -50% materials dropped",
+      "unlocked_by": "Walk a total of 20000 steps",
+      "unlocks": [
+        {
+          "name": "Scarf",
+          "type": "item"
+        }
+      ],
+      "tags": [
+        "Speed"
+      ],
+      "is_dlc": true
+    },
+    {
+      "name": "Buccaneer",
+      "stats": "Picked up materials have +100% value Picking up a material resets the cooldown of all your weapons -100 % Attack Speed -50% materials dropped from enemies",
+      "unlocked_by": "Reach +100 % Pickup Range",
+      "unlocks": [
+        {
+          "name": "Eyepatch",
+          "type": "item"
+        }
+      ],
+      "tags": [
+        "Pickup"
+      ],
+      "is_dlc": true
+    },
+    {
+      "name": "Ogre",
+      "stats": "Enemies taking double their max health as damage explode for 10 ( +50% [Max HP.png] -50% [Attack Speed.png] ) damage +10 Melee Damage You can't equip ranged weapons -50 % Attack Speed -10 % Speed",
+      "unlocked_by": "Deal 1000 damage to an enemy in a single hit",
+      "unlocks": [
+        {
+          "name": "Mace",
+          "type": "item"
+        }
+      ],
+      "tags": [
+        "Max HP",
+        "Melee Damage",
+        "Explosive (Item Tag)"
+      ],
+      "is_dlc": true
+    },
+    {
+      "name": "Romantic",
+      "stats": "Hitting an enemy that has less than 25% health has a 5% ( 50% [Max HP.png] ) chance to charm it for 8 seconds +50 Range with melee weapons -3 % Damage for every 5 Curse you have -1 Armor for every 5 Curse you have +1 Curse at the end of a wave",
+      "unlocked_by": "Finish a run with 0 Curse",
+      "unlocks": [
+        {
+          "name": "Flute",
+          "type": "item"
+        }
+      ],
+      "tags": [],
+      "is_dlc": true
+    }
+  ]
+}

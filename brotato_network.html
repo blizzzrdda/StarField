@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brotato Characters & Items Network</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="app">
+        <header>
+            <h1>🥔 Brotato Characters & Items Network</h1>
+            <p>Interactive network showing relationships between characters and items based on shared tags</p>
+        </header>
+
+        <div id="controls">
+            <div class="control-group">
+                <label for="node-filter">Filter by type:</label>
+                <select id="node-filter">
+                    <option value="all">All</option>
+                    <option value="character">Characters only</option>
+                    <option value="item">Items only</option>
+                </select>
+            </div>
+
+            <div class="control-group">
+                <label for="dlc-filter">DLC Content:</label>
+                <select id="dlc-filter">
+                    <option value="all">All</option>
+                    <option value="base">Base game only</option>
+                    <option value="dlc">DLC only</option>
+                </select>
+            </div>
+
+            <div class="control-group">
+                <label for="tag-filter">Filter by tag:</label>
+                <select id="tag-filter">
+                    <option value="all">All tags</option>
+                </select>
+            </div>
+
+            <div class="control-group">
+                <button id="reset-zoom">Reset View</button>
+                <button id="toggle-labels">Toggle Labels</button>
+            </div>
+        </div>
+
+        <div id="legend">
+            <h3>Legend</h3>
+            <div class="legend-item">
+                <div class="legend-color character"></div>
+                <span>Characters</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color item"></div>
+                <span>Items</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color dlc"></div>
+                <span>DLC Content</span>
+            </div>
+        </div>
+
+        <div id="info-panel">
+            <h3>Node Information</h3>
+            <div id="node-info">
+                <p>Hover over a node to see details</p>
+            </div>
+        </div>
+
+        <div id="visualization">
+            <svg id="network-svg"></svg>
+        </div>
+
+        <div id="stats">
+            <h3>Network Statistics</h3>
+            <div id="stats-content">
+                <p>Loading...</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Global variables
+        let networkData = null;
+        let svg, g, simulation;
+        let nodes, links, nodeElements, linkElements, labelElements;
+        let width, height;
+        let showLabels = true;
+
+        // Color scales
+        const colorScale = d3.scaleOrdinal()
+            .domain(['character', 'item'])
+            .range(['#4CAF50', '#2196F3']);
+
+        const dlcColorScale = d3.scaleOrdinal()
+            .domain([true, false])
+            .range(['#FF9800', '#757575']);
+
+        // Initialize the visualization
+        async function init() {
+            try {
+                // Try to load the processed network data via fetch first
+                try {
+                    const response = await fetch('brotato_network_data.json');
+                    if (response.ok) {
+                        networkData = await response.json();
+                    } else {
+                        throw new Error('Failed to fetch data file');
+                    }
+                } catch (fetchError) {
+                    // Fallback: try to load from embedded data or show instructions
+                    console.warn('Could not fetch data file, trying alternative methods...', fetchError);
+
+                    // Check if we're running from file:// protocol
+                    if (window.location.protocol === 'file:') {
+                        document.getElementById('stats-content').innerHTML = `
+                            <div style="color: #e74c3c; text-align: center; padding: 20px;">
+                                <h4>🚨 Local File Access Issue</h4>
+                                <p>The visualization needs to load data via HTTP. Please use one of these options:</p>
+                                <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin: 10px 0; text-align: left;">
+                                    <strong>Option 1 - Python Server:</strong><br>
+                                    <code>python -m http.server 8000</code><br>
+                                    Then open: <a href="http://localhost:8000/brotato_network.html">http://localhost:8000/brotato_network.html</a>
+                                </div>
+                                <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin: 10px 0; text-align: left;">
+                                    <strong>Option 2 - Node.js Server:</strong><br>
+                                    <code>npx http-server -p 8000</code><br>
+                                    Then open: <a href="http://localhost:8000/brotato_network.html">http://localhost:8000/brotato_network.html</a>
+                                </div>
+                                <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin: 10px 0; text-align: left;">
+                                    <strong>Option 3 - Use the embedded version:</strong><br>
+                                    Open <code>brotato_network_embedded.html</code> instead
+                                </div>
+                            </div>
+                        `;
+                        return;
+                    } else {
+                        throw fetchError;
+                    }
+                }
+
+                console.log('Network data loaded:', networkData);
+
+                setupVisualization();
+                populateControls();
+                updateStats();
+                createNetwork();
+
+            } catch (error) {
+                console.error('Error loading network data:', error);
+                document.getElementById('stats-content').innerHTML =
+                    '<p style="color: red;">Error loading data. Please ensure brotato_network_data.json exists and run process_data.js if needed.</p>';
+            }
+        }
+
+        // Setup the SVG and dimensions
+        function setupVisualization() {
+            const container = document.getElementById('visualization');
+            width = container.clientWidth;
+            height = container.clientHeight;
+
+            svg = d3.select('#network-svg')
+                .attr('width', width)
+                .attr('height', height);
+
+            // Add zoom behavior
+            const zoom = d3.zoom()
+                .scaleExtent([0.1, 10])
+                .on('zoom', (event) => {
+                    g.attr('transform', event.transform);
+                });
+
+            svg.call(zoom);
+
+            // Create main group for all elements
+            g = svg.append('g');
+
+            // Handle window resize
+            window.addEventListener('resize', () => {
+                width = container.clientWidth;
+                height = container.clientHeight;
+                svg.attr('width', width).attr('height', height);
+                simulation.force('center', d3.forceCenter(width / 2, height / 2));
+                simulation.alpha(0.3).restart();
+            });
+        }
+
+        // Populate control dropdowns
+        function populateControls() {
+            const tagFilter = document.getElementById('tag-filter');
+
+            // Add tag options
+            networkData.tags.forEach(tag => {
+                const option = document.createElement('option');
+                option.value = tag;
+                option.textContent = tag;
+                tagFilter.appendChild(option);
+            });
+
+            // Add event listeners
+            document.getElementById('node-filter').addEventListener('change', filterNetwork);
+            document.getElementById('dlc-filter').addEventListener('change', filterNetwork);
+            document.getElementById('tag-filter').addEventListener('change', filterNetwork);
+            document.getElementById('reset-zoom').addEventListener('click', resetZoom);
+            document.getElementById('toggle-labels').addEventListener('click', toggleLabels);
+        }
+
+        // Update statistics display
+        function updateStats() {
+            const stats = networkData.statistics;
+            const statsContent = document.getElementById('stats-content');
+
+            statsContent.innerHTML = `
+                <div class="stat-item">
+                    <strong>Characters:</strong> ${stats.total_characters} (${stats.dlc_characters} DLC)
+                </div>
+                <div class="stat-item">
+                    <strong>Items:</strong> ${stats.total_items} (${stats.dlc_items} DLC)
+                </div>
+                <div class="stat-item">
+                    <strong>Total Connections:</strong> ${stats.total_links}
+                </div>
+                <div class="stat-item">
+                    <strong>Tags:</strong> ${stats.total_tags}
+                </div>
+                <div class="stat-item">
+                    <strong>Largest Group:</strong> ${stats.largest_group} (${stats.largest_group_size} nodes)
+                </div>
+            `;
+        }
+
+        // Create the network visualization
+        function createNetwork() {
+            // Copy data to avoid modifying original
+            nodes = networkData.nodes.map(d => ({...d}));
+            links = networkData.links.map(d => ({...d}));
+
+            // Create force simulation
+            simulation = d3.forceSimulation(nodes)
+                .force('link', d3.forceLink(links).id(d => d.id).distance(50).strength(0.1))
+                .force('charge', d3.forceManyBody().strength(-100))
+                .force('center', d3.forceCenter(width / 2, height / 2))
+                .force('collision', d3.forceCollide().radius(15));
+
+            // Create links
+            linkElements = g.append('g')
+                .attr('class', 'links')
+                .selectAll('line')
+                .data(links)
+                .enter().append('line')
+                .attr('class', 'link')
+                .attr('stroke-width', d => Math.sqrt(d.strength))
+                .attr('stroke-opacity', 0.6);
+
+            // Create nodes
+            nodeElements = g.append('g')
+                .attr('class', 'nodes')
+                .selectAll('circle')
+                .data(nodes)
+                .enter().append('circle')
+                .attr('class', 'node')
+                .attr('r', d => d.type === 'character' ? 8 : 6)
+                .attr('fill', d => d.is_dlc ? dlcColorScale(true) : colorScale(d.type))
+                .attr('stroke', '#fff')
+                .attr('stroke-width', 2)
+                .call(d3.drag()
+                    .on('start', dragstarted)
+                    .on('drag', dragged)
+                    .on('end', dragended))
+                .on('mouseover', showNodeInfo)
+                .on('mouseout', hideNodeInfo);
+
+            // Create labels
+            labelElements = g.append('g')
+                .attr('class', 'labels')
+                .selectAll('text')
+                .data(nodes)
+                .enter().append('text')
+                .attr('class', 'label')
+                .attr('text-anchor', 'middle')
+                .attr('dy', '.35em')
+                .style('font-size', '10px')
+                .style('fill', '#333')
+                .style('pointer-events', 'none')
+                .text(d => d.name);
+
+            // Update positions on simulation tick
+            simulation.on('tick', () => {
+                linkElements
+                    .attr('x1', d => d.source.x)
+                    .attr('y1', d => d.source.y)
+                    .attr('x2', d => d.target.x)
+                    .attr('y2', d => d.target.y);
+
+                nodeElements
+                    .attr('cx', d => d.x)
+                    .attr('cy', d => d.y);
+
+                labelElements
+                    .attr('x', d => d.x)
+                    .attr('y', d => d.y);
+            });
+        }
+
+        // Drag functions
+        function dragstarted(event, d) {
+            if (!event.active) simulation.alphaTarget(0.3).restart();
+            d.fx = d.x;
+            d.fy = d.y;
+        }
+
+        function dragged(event, d) {
+            d.fx = event.x;
+            d.fy = event.y;
+        }
+
+        function dragended(event, d) {
+            if (!event.active) simulation.alphaTarget(0);
+            d.fx = null;
+            d.fy = null;
+        }
+
+        // Show node information
+        function showNodeInfo(event, d) {
+            const info = document.getElementById('node-info');
+
+            let content = `
+                <h4>${d.name}</h4>
+                <p><strong>Type:</strong> ${d.type}</p>
+                <p><strong>DLC:</strong> ${d.is_dlc ? 'Yes' : 'No'}</p>
+                <p><strong>Tags:</strong> ${d.tags.join(', ') || 'None'}</p>
+            `;
+
+            if (d.type === 'character') {
+                content += `
+                    <p><strong>Stats:</strong> ${d.stats}</p>
+                    <p><strong>Unlocked by:</strong> ${d.unlocked_by}</p>
+                `;
+            } else {
+                content += `
+                    <p><strong>Rarity:</strong> ${d.rarity}</p>
+                    <p><strong>Effects:</strong> ${d.effects}</p>
+                    <p><strong>Price:</strong> ${d.base_price}</p>
+                `;
+            }
+
+            info.innerHTML = content;
+        }
+
+        function hideNodeInfo() {
+            document.getElementById('node-info').innerHTML = '<p>Hover over a node to see details</p>';
+        }
+
+        // Filter network based on controls
+        function filterNetwork() {
+            const nodeFilter = document.getElementById('node-filter').value;
+            const dlcFilter = document.getElementById('dlc-filter').value;
+            const tagFilter = document.getElementById('tag-filter').value;
+
+            // Filter nodes
+            nodeElements.style('display', d => {
+                let show = true;
+
+                if (nodeFilter !== 'all' && d.type !== nodeFilter) show = false;
+                if (dlcFilter === 'base' && d.is_dlc) show = false;
+                if (dlcFilter === 'dlc' && !d.is_dlc) show = false;
+                if (tagFilter !== 'all' && !d.tags.includes(tagFilter)) show = false;
+
+                return show ? 'block' : 'none';
+            });
+
+            // Filter labels
+            labelElements.style('display', d => {
+                let show = true;
+
+                if (nodeFilter !== 'all' && d.type !== nodeFilter) show = false;
+                if (dlcFilter === 'base' && d.is_dlc) show = false;
+                if (dlcFilter === 'dlc' && !d.is_dlc) show = false;
+                if (tagFilter !== 'all' && !d.tags.includes(tagFilter)) show = false;
+
+                return show && showLabels ? 'block' : 'none';
+            });
+
+            // Filter links (show only if both nodes are visible)
+            linkElements.style('display', d => {
+                const sourceVisible = nodeElements.filter(n => n.id === d.source.id).style('display') !== 'none';
+                const targetVisible = nodeElements.filter(n => n.id === d.target.id).style('display') !== 'none';
+                return sourceVisible && targetVisible ? 'block' : 'none';
+            });
+        }
+
+        // Reset zoom
+        function resetZoom() {
+            svg.transition().duration(750).call(
+                d3.zoom().transform,
+                d3.zoomIdentity
+            );
+        }
+
+        // Toggle labels
+        function toggleLabels() {
+            showLabels = !showLabels;
+            labelElements.style('display', showLabels ? 'block' : 'none');
+            document.getElementById('toggle-labels').textContent =
+                showLabels ? 'Hide Labels' : 'Show Labels';
+        }
+
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+{
+  "name": "brotato-network-visualization",
+  "version": "1.0.0",
+  "description": "Interactive network visualization of Brotato characters and items based on shared tags",
+  "main": "process_data.js",
+  "scripts": {
+    "process": "node process_data.js",
+    "embed": "node create_embedded_version.js",
+    "serve": "python -m http.server 8000",
+    "serve-node": "npx http-server -p 8000",
+    "build": "npm run process && npm run embed",
+    "start": "npm run build && npm run serve",
+    "dev": "npm run process && npm run embed"
+  },
+  "keywords": [
+    "brotato",
+    "visualization",
+    "d3js",
+    "network-graph",
+    "force-directed",
+    "gaming",
+    "data-visualization"
+  ],
+  "author": "Brotato Network Visualizer",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {
+    "http-server": "^14.1.1"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-username/brotato-network-visualization.git"
+  },
+  "bugs": {
+    "url": "https://github.com/your-username/brotato-network-visualization/issues"
+  },
+  "homepage": "https://github.com/your-username/brotato-network-visualization#readme"
+}
